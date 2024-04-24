@@ -43,7 +43,7 @@ export const Preços = styled.p`
 
 export const TagHeader = styled.div`
   color: ${cores.branca};
-  margin-left: 115px;
+  margin-left: 500px;
   margin-top: 30px;
   font-size: 32px;
   border-radius: 8px;

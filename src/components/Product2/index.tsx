@@ -1,5 +1,6 @@
 import { ButtonButton, Card, Descricao, Titulo } from './styles'
 import Tag2 from '../header/Tag2'
+import estrela from '../../assets/images/estrela.png'
 
 type Props = {
   title: string
@@ -17,6 +18,7 @@ const Product = ({ title, description, image, category, system }: Props) => (
         {category && <Tag2>{category}</Tag2>} <Tag2>{system}</Tag2>
       </div>
     </div>
+
     <Titulo>{title}</Titulo>
     <Descricao>{description}</Descricao>
     <ButtonButton>Saiba mais</ButtonButton>

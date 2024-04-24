@@ -43,16 +43,10 @@ export const Preços = styled.p`
 
 export const TagHeader = styled.div`
   color: ${cores.branca};
-  margin-left: 115px;
   margin-top: 30px;
   font-size: 32px;
-  border-radius: 8px;
   display: inline-block;
-  font-family: Roboto;
   font-weight: 100;
-  line-height: 37.5px;
-  width: 101px;
-  height: 33.25px;
-  gap: 0px;
-  opacity: 0px;
+  max-width: 450px;
+  margin-left: 40px;
 `

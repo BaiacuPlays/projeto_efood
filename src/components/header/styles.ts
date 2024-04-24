@@ -35,8 +35,8 @@ export const LinkCart = styled.a`
 
 export const BottomText = styled.h1`
   color: ${cores.branca};
-  font-size: 14px; /* Reduzindo o tamanho da fonte para evitar ocupar muito espaço */
-  margin-top: 20px; /* Espaçamento superior para criar espaço entre o texto e os elementos acima */
-  width: 100%; /* Garantindo que o texto ocupe a largura total */
-  text-align: center; /* Centralizando o texto horizontalmente */
+  font-size: 14px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
 `

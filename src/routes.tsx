@@ -4,10 +4,14 @@ import Home from './pages/Home'
 import Categories from './pages/Categories'
 
 const Rotas = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/categories" element={<Categories />} />
-  </Routes>
+  <>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+    <Routes>
+      <Route path="/categories" element={<Categories />} />
+    </Routes>
+  </>
 )
 
 export default Rotas
