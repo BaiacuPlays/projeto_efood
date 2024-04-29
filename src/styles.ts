@@ -2,8 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 import fundo from '../src/assets/images/fundo.png'
 
 export const cores = {
-  branca: '#eee',
-  verde: '#10ac84',
+  branca: '#FFFF',
   fundo: '#FFF8F2',
   textos: '#E66767',
   footer: '#FFEBD9'

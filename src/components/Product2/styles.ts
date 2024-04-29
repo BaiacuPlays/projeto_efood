@@ -12,14 +12,15 @@ export const Card = styled.div`
 `
 
 export const Titulo = styled.h3`
-  font-size: 16px;
-  display: block;
+  font-size: 18px;
   margin-top: 16px;
   margin-bottom: 8px;
   font-weight: 900;
   line-height: 18.75px;
   text-align: left;
+  justify-content: space-between;
 `
+
 export const Descricao = styled.p`
   font-size: 14px;
   line-height: 22px;
@@ -27,16 +28,22 @@ export const Descricao = styled.p`
   margin-bottom: 12px;
 `
 
+export const Estrela = styled.img`
+  max-width: 21px;
+  max-height: 21px;
+  float: right;
+  margin-right: 10px;
+  vertical-align: middle;
+`
+
 export const ButtonButton = styled.button`
   color: ${cores.branca};
   background-color: ${cores.textos};
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   border: none;
-  width: 100px; /* Ajuste a largura conforme necessário */
-  height: 32px; /* Ajuste a altura conforme necessário */
-  top: 806px;
-  left: 179px;
-  padding: 0 8px; /* Adicionando padding somente horizontal */
+  width: 100px;
+  height: 32px;
+  padding: 0 8px;
 `

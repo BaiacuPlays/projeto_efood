@@ -27,6 +27,7 @@ export const Links = styled.ul`
 
 export const LinkItem = styled.li`
   margin-right: 16px;
+  font-size: 18px;
 `
 
 export const LinkCart = styled.a`
