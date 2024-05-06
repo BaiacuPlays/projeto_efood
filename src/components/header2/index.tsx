@@ -1,7 +1,14 @@
-import { HeaderBar, BottomText } from './styles'
+import { Link } from 'react-router-dom'
+import logo from '../../assets/images/logo.png'
+import { HeaderBar, LogoContainer, BottomText } from './styles'
 
-const Header = () => (
+const Header2 = () => (
   <HeaderBar>
+    <LogoContainer>
+      <Link to="/">
+        <img src={logo} alt="EPLAY" /> {/* Coloque o logotipo aqui */}
+      </Link>
+    </LogoContainer>
     <div>
       <BottomText>
         Viva experiências gastronômicas no conforto da sua casa
@@ -10,4 +17,4 @@ const Header = () => (
   </HeaderBar>
 )
 
-export default Header
+export default Header2

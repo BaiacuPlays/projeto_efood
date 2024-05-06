@@ -17,7 +17,7 @@ const ProductsList2: React.FC<Props> = ({ background, locais }: Props) => (
         {locais.map((local, index) => (
           <Product2
             key={local.id}
-            category={index === 0 ? local.category : undefined} // Renderiza a categoria apenas no primeiro card
+            category={index === 0 ? local.category : undefined}
             description={local.description}
             image={local.image}
             system={local.system}

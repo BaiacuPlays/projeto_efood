@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { TagContainer } from '../Tag/styles'
 import { cores } from '../../../styles'
 
 export const Imagem = styled.div`
+  position: relative;
   width: 100%;
   height: 500px;
   display: block;
@@ -17,36 +17,32 @@ export const Imagem = styled.div`
     justify-content: space-between;
     align-items: flex-end;
   }
-
-  ${TagContainer} {
-    position: absolute;
-    top: 32px;
-  }
 `
 
 export const Titulo = styled.h2`
-  margin-top: 40px;
-  font-size: 32px;
-  max-width: 450px;
   color: ${cores.branca};
+  width: 676px;
+  height: 33.25px;
+  top: 376.75px;
+
+  gap: 0px;
+  opacity: 0px;
+  font-family: Roboto;
+  font-size: 32px;
   font-weight: 900;
-`
-
-export const Preços = styled.p`
-  font-size: 24px;
-  margin-top: 24px;
-
-  span {
-    text-decoration: line-through;
-  }
+  line-height: 37.5px;
+  margin-top: 70px;
 `
 
 export const TagHeader = styled.div`
+  position: absolute;
   color: ${cores.branca};
-  margin-top: 30px;
+  width: 101px;
+  height: 33.25px;
+  top: 60px;
+  left: 170px;
+  font-family: Roboto;
   font-size: 32px;
-  display: inline-block;
   font-weight: 100;
-  max-width: 450px;
-  margin-left: 40px;
+  line-height: 37.5px;
 `

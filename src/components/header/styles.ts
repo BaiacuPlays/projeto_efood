@@ -12,6 +12,8 @@ export const HeaderBar = styled.header`
     color: ${cores.textos};
     text-decoration: none;
     font-weight: bold;
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
   div {
@@ -35,7 +37,7 @@ export const LinkCart = styled.a`
 `
 
 export const BottomText = styled.h1`
-  color: ${cores.branca};
+  color: ${cores.footer};
   font-size: 14px;
   margin-top: 20px;
   width: 100%;

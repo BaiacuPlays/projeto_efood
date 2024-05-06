@@ -7,7 +7,7 @@ const Banner = () => (
     <TagHeader>Italiana</TagHeader>
     <div className="container">
       <div>
-        <Titulo>La Dolce Vita Trattoria </Titulo>
+        <Titulo>La Dolce Vita Trattoria</Titulo>
       </div>
     </div>
   </Imagem>
