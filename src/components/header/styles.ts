@@ -3,7 +3,7 @@ import { cores } from '../../styles'
 
 export const HeaderBar = styled.header`
   padding: 24px;
-  margin-bottom: 80px;
+  margin-bottom: 65.5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +28,6 @@ export const Links = styled.ul`
 `
 
 export const LinkItem = styled.li`
-  margin-right: 16px;
   font-size: 18px;
 `
 

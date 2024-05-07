@@ -4,45 +4,38 @@ import { cores } from '../../../styles'
 export const Imagem = styled.div`
   position: relative;
   width: 100%;
-  height: 500px;
-  display: block;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center top;
   font-weight: bold;
-
-  .container {
-    position: relative;
-    padding-top: 340px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+  border: 1px solid black;
+  overflow: hidden;
 `
 
 export const Titulo = styled.h2`
+  position: absolute;
   color: ${cores.branca};
-  width: 676px;
-  height: 33.25px;
-  top: 376.75px;
-
-  gap: 0px;
-  opacity: 0px;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 900;
   line-height: 37.5px;
-  margin-top: 70px;
+  margin: 0;
+  bottom: 20px;
+  left: 400px;
 `
 
 export const TagHeader = styled.div`
   position: absolute;
   color: ${cores.branca};
-  width: 101px;
-  height: 33.25px;
-  top: 60px;
-  left: 170px;
   font-family: Roboto;
   font-size: 32px;
   font-weight: 100;
   line-height: 37.5px;
+  margin: 0;
+  top: 20px;
+  left: 400px;
 `

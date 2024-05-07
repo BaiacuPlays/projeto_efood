@@ -1,5 +1,4 @@
 import { Imagem, TagHeader, Titulo } from './styles'
-
 import bannerImg from '../../../assets/images/apresentacao.png'
 
 const Banner = () => (
