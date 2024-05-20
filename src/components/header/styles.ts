@@ -5,8 +5,10 @@ export const HeaderBar = styled.header`
   padding: 24px;
   margin-bottom: 65.5px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: ${cores.footer};
 
   a {
     color: ${cores.textos};
@@ -15,16 +17,21 @@ export const HeaderBar = styled.header`
     margin-left: 15px;
     margin-right: 15px;
   }
+`
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+export const InnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1024px;
 `
 
 export const Links = styled.ul`
   display: flex;
-  margin-left: 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 `
 
 export const LinkItem = styled.li`
@@ -33,12 +40,11 @@ export const LinkItem = styled.li`
 
 export const LinkCart = styled.a`
   display: flex;
+  margin-left: 20px;
 `
 
-export const BottomText = styled.h1`
-  color: ${cores.footer};
-  font-size: 14px;
-  margin-top: 20px;
-  width: 100%;
-  text-align: center;
+export const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
 `
