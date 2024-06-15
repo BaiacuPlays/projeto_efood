@@ -6,7 +6,7 @@ const Header2 = () => (
   <HeaderBar>
     <LogoContainer>
       <Link to="/">
-        <img src={logo} alt="EPLAY" /> {/* Coloque o logotipo aqui */}
+        <img src={logo} alt="EPLAY" />
       </Link>
     </LogoContainer>
     <div>

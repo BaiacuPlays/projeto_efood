@@ -14,7 +14,7 @@ const Header = () => (
     <InnerContainer>
       <Links>
         <LinkItem>
-          <Link to="/categories">Restaurantes</Link>
+          <Link to="/">Restaurantes</Link>
         </LinkItem>
       </Links>
       <LogoContainer>

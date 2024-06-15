@@ -1,28 +1,19 @@
 import React from 'react'
-import Product2 from '../Product2'
-import Local from '../../models/Local'
-
 import { Container, List } from './styles'
+import { Restaurante } from '../../pages/Home'
+import Product2 from '../Product2'
 
 export type Props = {
   title: string
-  background: 'gray' | 'black'
-  locais: Local[]
+  restaurantes: Restaurante[]
 }
 
-const ProductsList2: React.FC<Props> = ({ background, locais }: Props) => (
-  <Container background={background}>
+const ProductsList2: React.FC<Props> = ({ restaurantes }) => (
+  <Container>
     <div className="container">
       <List>
-        {locais.map((local, index) => (
-          <Product2
-            key={local.id}
-            category={index === 0 ? local.category : undefined}
-            description={local.description}
-            image={local.image}
-            system={local.system}
-            title={local.title}
-          />
+        {restaurantes.map((restaurante) => (
+          <Product2 key={restaurante.id} restaurante={restaurante} />
         ))}
       </List>
     </div>

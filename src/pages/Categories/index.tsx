@@ -1,71 +1,43 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { CardapioItem, Restaurante } from '../../pages/Home'
 import Banner from '../../components/header/Banner'
+import { useParams } from 'react-router-dom'
 import ProductsList from '../../components/ProductsList'
-import Local from '../../models/Local'
+import Product from '../../components/Product'
 
-import pizza from '../../assets/images/pizza.png'
+const Categories: React.FC = () => {
+  const { id } = useParams<{ id: string }>()
+  const [restaurante, setRestaurante] = useState<Restaurante | null>(null)
 
-const promocoes: Local[] = [
-  {
-    id: 1,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'tudo q existe',
-    title: 'Pizza Marguerita'
-  },
-  {
-    id: 2,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'tudo q existe',
-    title: 'Pizza Marguerita'
-  },
-  {
-    id: 3,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'Pc computadores',
-    title: 'Pizza Marguerita'
-  },
-  {
-    id: 4,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'tudo q existe',
-    title: 'Pizza Marguerita'
-  },
-  {
-    id: 5,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'tudo q existe',
-    title: 'Pizza Marguerita'
-  },
-  {
-    id: 6,
-    category: 'ação',
-    description:
-      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
-    image: pizza,
-    system: 'tudo q existe',
-    title: 'Pizza Marguerita'
+  useEffect(() => {
+    const fetchRestaurante = async () => {
+      try {
+        const response = await axios.get(
+          `https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`
+        )
+        if (response.status === 200) {
+          setRestaurante(response.data)
+        }
+      } catch (error) {
+        console.error('Erro ao buscar restaurante:', error)
+      }
+    }
+
+    fetchRestaurante()
+  }, [id])
+
+  if (!restaurante) {
+    return <p>Carregando...</p>
   }
-]
 
-const Home = () => (
-  <>
-    <Banner />
-    <ProductsList locais={promocoes} title="Promoções" background="gray" />
-  </>
-)
+  return (
+    <div>
+      <Banner />
 
-export default Home
+      <ProductsList restaurantes={[restaurante]} title="Cardápio" />
+    </div>
+  )
+}
+
+export default Categories

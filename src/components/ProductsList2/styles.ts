@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
-import { Props } from '.'
 import { cores } from '../../styles'
 
-export const Container = styled.section<Omit<Props, 'title' | 'locais'>>`
+export const Container = styled.section`
   padding: 32px 0;
   background-color: ${cores.fundo};
   overflow: hidden;
