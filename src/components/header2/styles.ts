@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const HeaderBar = styled.header`
   padding: 24px;
@@ -10,9 +10,16 @@ export const HeaderBar = styled.header`
   flex-direction: column;
   height: 100%;
   position: relative;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    display: flex;
+  }
 `
 export const LogoContainer = styled.div`
-  margin-bottom: 100px;
+  margin-bottom: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const BottomText = styled.h1`
@@ -25,4 +32,13 @@ export const BottomText = styled.h1`
   width: 539px;
   height: 84px;
   text-align: center;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    line-height: 30px;
+    width: 90%;
+    align-items: center;
+    padding: 0 0 100px 30px;
+  }
 `

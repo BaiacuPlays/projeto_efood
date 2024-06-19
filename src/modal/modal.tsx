@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { cores } from '../styles'
+import { breakpoints, cores } from '../styles'
 
 type ModalProps = {
   show: boolean
@@ -19,6 +19,16 @@ const ModalWrapper = styled.div<{ show: boolean }>`
   z-index: 1000;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    align-items: center;
+    padding: 0 20px;
+  }
 `
 
 const ModalContent = styled.div`
@@ -46,6 +56,15 @@ const ModalContent = styled.div`
 
   p {
     margin: 10px 0;
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    flex-direction: column; /* Stack content vertically on smaller screens */
+    align-items: center;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    flex-direction: column; /* Stack content vertically on smaller screens */
+    align-items: center;
   }
 `
 

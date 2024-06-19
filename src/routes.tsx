@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import Categories from './pages/Categories'
+import Cardapio from './pages/Cardapio'
 import Header from './components/header'
 import Header2 from './components/header2'
 
 const Rotas = () => (
   <Routes>
     <Route path="/" element={<HomeWithHeader2 />} />
-    <Route path="/categories/:id" element={<CategoriesWithHeader />} />
+    <Route path="/cardapio/:id" element={<CardapiosWithHeader />} />
   </Routes>
 )
 
@@ -18,10 +18,10 @@ const HomeWithHeader2 = () => (
   </>
 )
 
-const CategoriesWithHeader = () => (
+const CardapiosWithHeader = () => (
   <>
     <Header />
-    <Categories />
+    <Cardapio />
   </>
 )
 

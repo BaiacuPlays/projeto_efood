@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const Card = styled.div`
   border: 1px solid #e66767;
@@ -47,6 +47,10 @@ export const Estrela = styled.img`
   max-height: 21px;
   float: right;
   margin-right: 13px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    white-space: nowrap;
+  }
 `
 
 export const ButtonButton = styled.button`

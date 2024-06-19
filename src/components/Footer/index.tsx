@@ -1,4 +1,6 @@
+import React from 'react'
 import { Container, FooterSection, Logo, Redes } from './styles'
+import { Link } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
 import redes from '../../assets/images/redes sociais.png'
 
@@ -6,7 +8,9 @@ const Footer = () => (
   <Container>
     <FooterSection>
       <div className="container">
-        <Logo src={logo} alt="logo" />
+        <Link to="/">
+          <img src={logo} alt="EPLAY" />
+        </Link>
         <Redes src={redes} alt="redes-sociais" />
       </div>
     </FooterSection>

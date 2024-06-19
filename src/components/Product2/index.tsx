@@ -15,7 +15,7 @@ const Product2: React.FC<Props> = ({ restaurante }) => (
       <img src={restaurante.capa} alt={restaurante.titulo} />
       <div style={{ position: 'absolute', top: 9, right: 12 }}>
         {restaurante.tipo && <Tag2>{restaurante.tipo}</Tag2>}
-        <Tag2>{restaurante.avaliacao}</Tag2>
+        {restaurante.destacado && <Tag2>Destaque da semana</Tag2>}
       </div>
     </div>
     <Titulo>
@@ -27,7 +27,7 @@ const Product2: React.FC<Props> = ({ restaurante }) => (
     </Titulo>
     <Descricao>{restaurante.descricao}</Descricao>
     <div>
-      <Link to={`/categories/${restaurante.id}`}>
+      <Link to={`/cardapio/${restaurante.id}`}>
         <ButtonButton>Saiba mais</ButtonButton>
       </Link>
     </div>

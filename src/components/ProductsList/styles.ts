@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const Container = styled.section`
   padding: 32px 0;
@@ -21,6 +21,16 @@ export const List = styled.ul`
   width: 100%;
   max-width: 1200px;
   padding: 0;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2px 0 2px;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    padding: 0 2px 0 2px;
+  }
 `
 
 export const ListItem = styled.li`

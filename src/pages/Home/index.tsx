@@ -1,6 +1,5 @@
 import ProductsList2 from '../../components/ProductsList2'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useGetRestaurantsQuery } from '../../services/api'
 
 export type CardapioItem = {
   foto: string
@@ -14,39 +13,39 @@ export type CardapioItem = {
 export type Restaurante = {
   id: number
   titulo: string
+  destacado: boolean
   tipo: string
-  avaliacao: string
+  avaliacao: number
   descricao: string
   capa: string
   cardapio: CardapioItem[]
 }
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState<Restaurante[]>([])
+  const { data: restaurants, error, isLoading } = useGetRestaurantsQuery()
 
-  useEffect(() => {
-    const fetchRestaurants = async () => {
-      try {
-        const response = await axios.get(
-          'https://fake-api-tau.vercel.app/api/efood/restaurantes'
-        )
-        if (response.status === 200) {
-          console.log('API response:', response.data)
-          setRestaurants(response.data)
-        }
-      } catch (error) {
-        console.error('Erro ao buscar restaurantes:', error)
+  if (isLoading) return <p>Loading...</p>
+  if (error) return <p>Error loading restaurants</p>
+
+  if (restaurants) {
+    const sortedRestaurants = [...restaurants].sort((a, b) => {
+      if (a.destacado && !b.destacado) {
+        return -1
+      } else if (!a.destacado && b.destacado) {
+        return 1
+      } else {
+        return b.avaliacao - a.avaliacao
       }
-    }
+    })
 
-    fetchRestaurants()
-  }, [])
+    return (
+      <>
+        <ProductsList2 restaurantes={sortedRestaurants} title="Restaurantes" />
+      </>
+    )
+  }
 
-  return (
-    <>
-      <ProductsList2 restaurantes={restaurants} title="Restaurantes" />
-    </>
-  )
+  return null
 }
 
 export default Home

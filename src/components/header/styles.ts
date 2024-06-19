@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const HeaderBar = styled.header`
   padding: 24px;
@@ -16,6 +16,14 @@ export const HeaderBar = styled.header`
     font-weight: bold;
     margin-left: 15px;
     margin-right: 15px;
+  }
+
+  @media (max-width: ${breakpoints.desktop}) {
+    display: none;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    display: none;
   }
 `
 
@@ -38,9 +46,10 @@ export const LinkItem = styled.li`
   font-size: 18px;
 `
 
-export const LinkCart = styled.a`
+export const CartButton = styled.a`
   display: flex;
   margin-left: 20px;
+  cursor: pointer;
 `
 
 export const LogoContainer = styled.div`
