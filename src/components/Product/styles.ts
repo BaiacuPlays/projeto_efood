@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const Card = styled.div`
   background-color: ${cores.textos};
@@ -20,6 +20,14 @@ export const Card = styled.div`
     width: 100%;
     height: 200px;
     object-fit: cover;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    margin: 20px;
+
+    img {
+      padding: 4px;
+    }
   }
 `
 
