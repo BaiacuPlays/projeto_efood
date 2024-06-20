@@ -30,6 +30,7 @@ export const Sidebar = styled.aside`
   background-color: ${cores.textos};
   z-index: 1;
   padding: 20px 8px 0 8px;
+  width: 360px;
 `
 
 export const Valorpreco = styled.p`
@@ -104,4 +105,125 @@ export const CartItem = styled.li`
     bottom: 8px;
     right: 8px;
   }
+`
+
+export const CheckOutForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  h2 {
+    margin-bottom: 16px;
+    color: ${cores.footer};
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18.75px;
+    text-align: left;
+  }
+`
+
+export const Input = styled.input`
+  padding: 10px;
+  border: ${cores.textos};
+  width: 100%;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.41px;
+  text-align: left;
+
+  background-color: ${cores.footer};
+`
+
+export const Label = styled.label`
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: ${cores.footer};
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.41px;
+  text-align: left;
+`
+
+export const FormRow = styled.div`
+  display: flex;
+  gap: 16px;
+
+  div {
+    flex: 1;
+  }
+`
+
+export const EmptyCart = styled.p`
+  color: ${cores.branca};
+  align-items: center;
+  text-align: center;
+  padding-top: 20px;
+`
+
+export const LabelPrice = styled.span`
+  color: ${cores.footer};
+`
+export const Final = styled.div`
+  color: ${cores.branca};
+
+  h2 {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18.75px;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+  p {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+
+    margin-bottom: 25px;
+  }
+`
+
+export const AlertMessage = styled.div`
+  background-color: ${cores.footer};
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin: 0;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  button {
+    margin-top: 5px;
+
+    background-color: ${cores.textos};
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+
+    &:hover {
+      background-color: #c82333;
+    }
+  }
+`
+export const CheckOutFooter = styled.div`
+  color: ${cores.branca};
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 `

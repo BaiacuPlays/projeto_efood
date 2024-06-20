@@ -58,13 +58,23 @@ const ModalContent = styled.div`
     margin: 10px 0;
   }
   @media (max-width: ${breakpoints.desktop}) {
-    flex-direction: column; /* Stack content vertically on smaller screens */
+    flex-direction: column;
     align-items: center;
+
+    img {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
   }
 
   @media (max-width: ${breakpoints.tablet}) {
-    flex-direction: column; /* Stack content vertically on smaller screens */
+    flex-direction: column;
     align-items: center;
+
+    img {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
   }
 `
 

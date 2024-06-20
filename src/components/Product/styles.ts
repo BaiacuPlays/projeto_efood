@@ -24,10 +24,6 @@ export const Card = styled.div`
 
   @media (max-width: ${breakpoints.tablet}) {
     margin: 20px;
-
-    img {
-      padding: 4px;
-    }
   }
 `
 
