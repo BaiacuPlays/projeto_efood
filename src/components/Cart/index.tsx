@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ButtonButton } from '../../components/Product/styles'
+import axios, { AxiosError } from 'axios'
 
 import {
   Overlay,
@@ -24,6 +25,8 @@ import { close, remove, clearCart } from '../../store/reducers/cart'
 
 const Cart = () => {
   const dispatch = useDispatch()
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+
   const [currentTab, setCurrentTab] = useState('cart')
   const [nome, setNome] = useState('')
   const [endereco, setEndereco] = useState('')
@@ -51,12 +54,8 @@ const Cart = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
-
   const getTotalPrice = () => {
-    return items.reduce((acumulador, Valoratual) => {
-      return acumulador + Valoratual.preco
-    }, 0)
+    return items.reduce((accumulator, item) => accumulator + item.preco, 0)
   }
 
   const removeItem = (id: number) => {
@@ -155,12 +154,79 @@ const Cart = () => {
     dispatch(close())
   }
 
-  const handleFinalizarPagamento = () => {
-    if (canFinalizePayment()) {
-      setPedidoFinalizado(true)
-      setCurrentTab('finalizado')
-    } else {
-      setAlertMessage('Por favor, preencha todos os campos obrigatórios.')
+  const handleFinalizarPagamento = async () => {
+    try {
+      if (canFinalizePayment()) {
+        const pedido = {
+          nome,
+          endereco,
+          cidade,
+          cep: cep.replace(/\D/g, ''),
+          numero,
+          nomeCartao,
+          numeroCartao: numeroCartao.replace(/\s/g, ''),
+          cvv,
+          mesVencimento,
+          anoVencimento,
+          valorTotal: getTotalPrice(),
+          itens: items.map((item) => ({
+            id: item.id,
+            nome: item.nome,
+            preco: item.preco
+          }))
+        }
+
+        console.log('Pedido enviado:', pedido)
+
+        const response = await axios.post(
+          'https://fake-api-tau.vercel.app/api/efood/checkout',
+          pedido
+        )
+
+        console.log('Resposta da API:', response.data)
+
+        if (response.status === 200) {
+          setPedidoFinalizado(true)
+          setCurrentTab('completed')
+        } else {
+          console.error('Erro ao finalizar o pedido - status:', response.status)
+          console.error('Detalhes do erro:', response.data)
+          setAlertMessage(
+            'Erro ao finalizar o pedido. Por favor, tente novamente.'
+          )
+          setShowAlert(true)
+        }
+      } else {
+        setAlertMessage('Por favor, preencha todos os campos obrigatórios.')
+        setShowAlert(true)
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError
+        if (axiosError.response) {
+          console.error(
+            'Erro ao finalizar pedido - status:',
+            axiosError.response.status
+          )
+          console.error('Detalhes do erro:', axiosError.response.data)
+          setAlertMessage(
+            'Erro ao finalizar o pedido. Por favor, tente novamente.'
+          )
+        } else {
+          console.error(
+            'Erro inesperado ao finalizar pedido:',
+            axiosError.message
+          )
+          setAlertMessage(
+            'Erro inesperado ao finalizar o pedido. Por favor, tente novamente.'
+          )
+        }
+      } else {
+        console.error('Erro inesperado ao finalizar pedido:', error)
+        setAlertMessage(
+          'Erro inesperado ao finalizar o pedido. Por favor, tente novamente.'
+        )
+      }
       setShowAlert(true)
     }
   }
@@ -273,6 +339,7 @@ const Cart = () => {
               <div>
                 <Label>CEP *</Label>
                 <Input
+                  placeholder="00000-000"
                   value={cep}
                   onChange={handleCepChange}
                   maxLength={9}
@@ -319,15 +386,18 @@ const Cart = () => {
               <div>
                 <Label style={{ minWidth: '120px' }}>Número do Cartão</Label>
                 <Input
+                  placeholder="0000 0000 0000 0000"
                   style={{ width: '228px' }}
                   value={numeroCartao}
                   onChange={handleNumeroCartaoChange}
+                  maxLength={19}
                   required
                 />
               </div>
               <div>
                 <Label>CVV *</Label>
                 <Input
+                  placeholder="000"
                   value={cvv}
                   onChange={handleCVVChange}
                   maxLength={3}
@@ -339,6 +409,7 @@ const Cart = () => {
               <div style={{ marginRight: '16px' }}>
                 <Label>Mês de vencimento *</Label>
                 <Input
+                  placeholder="00"
                   value={mesVencimento}
                   onChange={handleMesVencimentoChange}
                   maxLength={2}
@@ -348,6 +419,7 @@ const Cart = () => {
               <div>
                 <Label>Ano de vencimento *</Label>
                 <Input
+                  placeholder="0000"
                   value={anoVencimento}
                   onChange={handleAnoVencimentoChange}
                   maxLength={4}
@@ -371,7 +443,7 @@ const Cart = () => {
               Voltar para a edição de endereço
             </ButtonButton>
           </CheckOutForm>
-        ) : (
+        ) : currentTab === 'completed' ? (
           <div>
             <Final>
               <h2>Pedido Finalizado</h2>
@@ -380,29 +452,20 @@ const Cart = () => {
                 está em processo de preparação e, em breve, será entregue no
                 endereço fornecido.
               </p>
-              <p>
-                Gostaríamos de ressaltar que nossos entregadores não estão
-                autorizados a realizar cobranças extras.
-              </p>
-              <p>
-                Lembre-se da importância de higienizar as mãos após o
-                recebimento do pedido, garantindo assim sua segurança e
-                bem-estar durante a refeição.
-              </p>
-              <p>
-                Esperamos que desfrute de uma deliciosa e agradável experiência
-                gastronômica. Bom apetite!
-              </p>
+              <Link to="/" className="link-concluir">
+                <ButtonButton
+                  title="Concluir"
+                  style={{ padding: '4px', marginTop: '16px', width: '100%' }}
+                  onClick={clearCartAndReset}
+                >
+                  Concluir
+                </ButtonButton>
+              </Link>
             </Final>
-            <Link to="/" className="link-concluir">
-              <ButtonButton
-                title="Concluir"
-                style={{ padding: '4px', marginTop: '16px', width: '100%' }}
-                onClick={clearCartAndReset}
-              >
-                Concluir
-              </ButtonButton>
-            </Link>
+          </div>
+        ) : (
+          <div>
+            <EmptyCart>Carrinho vazio</EmptyCart>
           </div>
         )}
       </Sidebar>

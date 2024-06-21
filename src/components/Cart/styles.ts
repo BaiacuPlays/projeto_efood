@@ -15,22 +15,30 @@ export const Overlay = styled.div`
 export const CartContainer = styled.div`
   position: fixed;
   top: 0;
-  left: 0;
+  left: 100%;
   width: 100%;
   height: 100%;
-  display: none;
+  display: flex;
   justify-content: flex-end;
-  z-index: 1;
+  z-index: 20;
+  transition: transform 0.3s ease-in-out;
 
   &.is-open {
-    display: flex;
+    left: 0;
   }
 `
+
 export const Sidebar = styled.aside`
   background-color: ${cores.textos};
-  z-index: 1;
+  z-index: 21;
   padding: 20px 8px 0 8px;
   width: 360px;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  ${CartContainer}.is-open & {
+    transform: translateX(0);
+  }
 `
 
 export const Valorpreco = styled.p`
