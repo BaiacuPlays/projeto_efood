@@ -168,13 +168,13 @@ const Cart = () => {
             city: cidade,
             zipCode: cep,
             number: numero,
-            complement: '' // opcional, você pode adicionar caso necessário
+            complement: ''
           }
         },
         payment: {
           card: {
             name: nomeCartao,
-            number: numeroCartao.replace(/\s/g, ''), // remover espaços do número do cartão
+            number: numeroCartao.replace(/\s/g, ''),
             code: parseInt(cvv),
             expires: {
               month: parseInt(mesVencimento),
@@ -425,7 +425,7 @@ const Cart = () => {
             <Final>
               <h2>Pedido Finalizado {orderId && ` - Pedido ID: ${orderId}`}</h2>
               <p>Seu pedido foi confirmado com sucesso!</p>
-              {/* Exibir detalhes do pedido */}
+
               <p>Valor total: {formatapreco(getTotalPrice())}</p>
               <p>Entrega para: {nome}</p>
               <p>
@@ -437,7 +437,6 @@ const Cart = () => {
                 Data de expiração: {mesVencimento}/{anoVencimento}
               </p>
 
-              {/* Texto adicional */}
               <p>
                 Estamos felizes em informar que seu pedido já está em processo
                 de preparação e, em breve, será entregue no endereço fornecido.
