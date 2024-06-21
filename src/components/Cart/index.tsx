@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ButtonButton } from '../../components/Product/styles'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 
 import {
   Overlay,
@@ -25,8 +25,6 @@ import { close, remove, clearCart } from '../../store/reducers/cart'
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
-
   const [currentTab, setCurrentTab] = useState('cart')
   const [nome, setNome] = useState('')
   const [endereco, setEndereco] = useState('')
@@ -39,6 +37,7 @@ const Cart = () => {
   const [cep, setCep] = useState('')
   const [numero, setNumero] = useState('')
   const [pedidoFinalizado, setPedidoFinalizado] = useState(false)
+  const [orderId, setOrderId] = useState<string | null>(null)
 
   const [validNome, setValidNome] = useState(false)
   const [validEndereco, setValidEndereco] = useState(false)
@@ -54,8 +53,12 @@ const Cart = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+
   const getTotalPrice = () => {
-    return items.reduce((accumulator, item) => accumulator + item.preco, 0)
+    return items.reduce((acumulador, Valoratual) => {
+      return acumulador + Valoratual.preco
+    }, 0)
   }
 
   const removeItem = (id: number) => {
@@ -155,78 +158,52 @@ const Cart = () => {
   }
 
   const handleFinalizarPagamento = async () => {
-    try {
-      if (canFinalizePayment()) {
-        const pedido = {
-          nome,
-          endereco,
-          cidade,
-          cep: cep.replace(/\D/g, ''),
-          numero,
-          nomeCartao,
-          numeroCartao: numeroCartao.replace(/\s/g, ''),
-          cvv,
-          mesVencimento,
-          anoVencimento,
-          valorTotal: getTotalPrice(),
-          itens: items.map((item) => ({
-            id: item.id,
-            nome: item.nome,
-            preco: item.preco
-          }))
+    if (canFinalizePayment()) {
+      const data = {
+        products: items.map((item) => ({ id: item.id, price: item.preco })),
+        delivery: {
+          receiver: nome,
+          address: {
+            description: endereco,
+            city: cidade,
+            zipCode: cep,
+            number: numero,
+            complement: '' // opcional, você pode adicionar caso necessário
+          }
+        },
+        payment: {
+          card: {
+            name: nomeCartao,
+            number: numeroCartao.replace(/\s/g, ''), // remover espaços do número do cartão
+            code: parseInt(cvv),
+            expires: {
+              month: parseInt(mesVencimento),
+              year: parseInt(anoVencimento)
+            }
+          }
         }
+      }
 
-        console.log('Pedido enviado:', pedido)
-
+      try {
         const response = await axios.post(
           'https://fake-api-tau.vercel.app/api/efood/checkout',
-          pedido
+          data
         )
-
         console.log('Resposta da API:', response.data)
 
-        if (response.status === 200) {
-          setPedidoFinalizado(true)
-          setCurrentTab('completed')
-        } else {
-          console.error('Erro ao finalizar o pedido - status:', response.status)
-          console.error('Detalhes do erro:', response.data)
-          setAlertMessage(
-            'Erro ao finalizar o pedido. Por favor, tente novamente.'
-          )
-          setShowAlert(true)
+        if (response.data && response.data.orderId) {
+          setOrderId(response.data.orderId)
         }
-      } else {
-        setAlertMessage('Por favor, preencha todos os campos obrigatórios.')
+
+        setPedidoFinalizado(true)
+        setCurrentTab('finalizado')
+      } catch (error) {
+        console.error('Erro ao enviar pedido:', error)
+        setAlertMessage('Erro ao enviar pedido. Tente novamente mais tarde.')
         setShowAlert(true)
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError
-        if (axiosError.response) {
-          console.error(
-            'Erro ao finalizar pedido - status:',
-            axiosError.response.status
-          )
-          console.error('Detalhes do erro:', axiosError.response.data)
-          setAlertMessage(
-            'Erro ao finalizar o pedido. Por favor, tente novamente.'
-          )
-        } else {
-          console.error(
-            'Erro inesperado ao finalizar pedido:',
-            axiosError.message
-          )
-          setAlertMessage(
-            'Erro inesperado ao finalizar o pedido. Por favor, tente novamente.'
-          )
-        }
-      } else {
-        console.error('Erro inesperado ao finalizar pedido:', error)
-        setAlertMessage(
-          'Erro inesperado ao finalizar o pedido. Por favor, tente novamente.'
-        )
-      }
+    } else {
+      setAlertMessage('Por favor, preencha todos os campos obrigatórios.')
       setShowAlert(true)
     }
   }
@@ -443,29 +420,51 @@ const Cart = () => {
               Voltar para a edição de endereço
             </ButtonButton>
           </CheckOutForm>
-        ) : currentTab === 'completed' ? (
-          <div>
-            <Final>
-              <h2>Pedido Finalizado</h2>
-              <p>
-                Pedido realizado. Estamos felizes em informar que seu pedido já
-                está em processo de preparação e, em breve, será entregue no
-                endereço fornecido.
-              </p>
-              <Link to="/" className="link-concluir">
-                <ButtonButton
-                  title="Concluir"
-                  style={{ padding: '4px', marginTop: '16px', width: '100%' }}
-                  onClick={clearCartAndReset}
-                >
-                  Concluir
-                </ButtonButton>
-              </Link>
-            </Final>
-          </div>
         ) : (
           <div>
-            <EmptyCart>Carrinho vazio</EmptyCart>
+            <Final>
+              <h2>Pedido Finalizado {orderId && ` - Pedido ID: ${orderId}`}</h2>
+              <p>Seu pedido foi confirmado com sucesso!</p>
+              {/* Exibir detalhes do pedido */}
+              <p>Valor total: {formatapreco(getTotalPrice())}</p>
+              <p>Entrega para: {nome}</p>
+              <p>
+                Endereço: {endereco}, {numero}, {cidade} - {cep}
+              </p>
+              <p>Forma de pagamento: Cartão de Crédito</p>
+              <p>Nome no cartão: {nomeCartao}</p>
+              <p>
+                Data de expiração: {mesVencimento}/{anoVencimento}
+              </p>
+
+              {/* Texto adicional */}
+              <p>
+                Estamos felizes em informar que seu pedido já está em processo
+                de preparação e, em breve, será entregue no endereço fornecido.
+              </p>
+              <p>
+                Gostaríamos de ressaltar que nossos entregadores não estão
+                autorizados a realizar cobranças extras.
+              </p>
+              <p>
+                Lembre-se da importância de higienizar as mãos após o
+                recebimento do pedido, garantindo assim sua segurança e
+                bem-estar durante a refeição.
+              </p>
+              <p>
+                Esperamos que desfrute de uma deliciosa e agradável experiência
+                gastronômica. Bom apetite!
+              </p>
+            </Final>
+            <Link to="/" className="link-concluir">
+              <ButtonButton
+                title="Concluir"
+                style={{ padding: '4px', marginTop: '16px', width: '100%' }}
+                onClick={clearCartAndReset}
+              >
+                Concluir
+              </ButtonButton>
+            </Link>
           </div>
         )}
       </Sidebar>
